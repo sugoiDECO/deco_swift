@@ -10,13 +10,20 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate {
 
     var window: UIWindow?
-
-
+    let beaconManager = ESTBeaconManager()
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        self.beaconManager.delegate = self
+        self.beaconManager.requestAlwaysAuthorization()
+        self.beaconManager.startMonitoringForRegion(CLBeaconRegion(
+            proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!,
+            identifier: "monitored region"))
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(
+            UIUserNotificationSettings(forTypes: .Alert, categories: nil))
         return true
     }
 
@@ -106,6 +113,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    //Estimote
+    func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
+        print("検知！")
+        let notification = UILocalNotification()
+        notification.alertBody =
+            "次のミッションだ！" +
+            "タスクを確認しろ！"
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+    }
+    
+    func beaconManager(manager: AnyObject, didExitRegion region: CLBeaconRegion) {
+        let notification = UILocalNotification()
+        notification.alertBody =
+            "Estimoteから離れたよ" +
+            manager.name
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+    }
+    
+    
 
 }
 

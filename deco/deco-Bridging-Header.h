@@ -9,9 +9,9 @@
 #ifndef deco_Bridging_Header_h
 #define deco_Bridging_Header_h
 
-#import "SVProgressHUD.h"
-#import "AFNetworking.h"
-#import "EstimoteSDK.h"
+#import <SVProgressHUD/SVProgressHUD.h>
+#import <AFNetworking/AFNetworking.h>
+#import <EstimoteSDK/EstimoteSDK.h>
 
 
 #endif /* deco_Bridging_Header_h */
