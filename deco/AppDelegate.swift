@@ -172,14 +172,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
                             alert.addAction(defaultAction)
                             
                             self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-                        
 
-                        topViewController.reload()
                         }
                     }
                     
                     //beaconKeyを登録
                     config.appearedTask = beaconKey
+                    topViewController.reload()
+
                 } else {
                     print("近くにBeaconがありません")
                 }
