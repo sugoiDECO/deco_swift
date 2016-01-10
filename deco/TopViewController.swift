@@ -47,10 +47,7 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if config.appearedTask!.count > 0 {
-            tableView.hidden = false
-            totalTaskView.hidden = false
-        }
+        
         self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
     }
     override func viewDidAppear(animated: Bool) {
@@ -64,6 +61,12 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TaskCell
+        let beaconName = config.appearedTask![indexPath.row] as! String
+        if let title = registeredTask[beaconName]!["title"] as? String {
+            cell.taskTitle.text = title
+        } else {
+            print("jsonエラー")
+        }
 //        cell.setupCell(appearedTask[indexPath.row], rank: indexPath.row + 1)
         return cell
     }
@@ -73,10 +76,14 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return config.appearedTask!.count
+        if config.appearedTask != nil {
+            return config.appearedTask!.count
+        } else {
+            return 0
+        }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let controller = TaskDetailViewController.getViewControllerWithTaskId(config.appearedTask!.count)
+        let controller = TaskDetailViewController.getViewControllerWithTaskId(indexPath.row)
         self.navigationController!.pushViewController(controller, animated: true)
     }
     
@@ -91,8 +98,8 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         do {
             let json: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(data,
                 options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                print("jsonは")
-                print(json)
+                //print("jsonは")
+                //print(json)
                 registeredTask = json
                 if let title = json["34433:43466"]!["title"] as? String {
 //                    self.hoge = hoge
@@ -109,11 +116,18 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     
     func reload() {
         print("reload tables")
+        if config.appearedTask != nil {
+            tableView.hidden = false
+            totalTaskView.hidden = false
+        }
+        
         self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    
 }
 
