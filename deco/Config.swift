@@ -10,18 +10,47 @@ import Foundation
 
 class Config {
     let userDefault: NSUserDefaults
-    
+    let beaconKey = "beacons"
+    var beacons: [String] = []
+
     init() {
         userDefault = NSUserDefaults.standardUserDefaults()
     }
     
-    var appearedTask: AnyObject {
+    var appearedTask: AnyObject? {
         get {
-            return userDefault.objectForKey(self.appearedTask as! String)!
+            print("getter")
+            if (userDefault.objectForKey(beaconKey) != nil) {
+                print("登録が１つでもあります")
+                return userDefault.objectForKey(beaconKey)
+            } else {
+                print("登録がありません")
+                return nil
+            }
+            
         }
-        set {
+        set(newValue) {
+            print("setter")
+            //値が来ます
+            print(newValue as! String)
+            //userDefaultがあるか、なければ作成
+            if ((userDefault.objectForKey(beaconKey) != nil)) {
+                beacons = userDefault.objectForKey(beaconKey) as! [String]
+                //userDefaultにnewValueがなければ追加
+                if (!beacons.contains(newValue as! String)) {
+                    beacons.append(newValue as! String)
+                    userDefault.setObject(beacons, forKey: beaconKey)
+                }
+            } else {
+                print("まだUserDefaultに登録されていません")
+                userDefault.setObject(beacons, forKey: beaconKey)
+            }
+            
+            print("beacons")
+            print(beacons)
             
         }
     }
+
     
 }
