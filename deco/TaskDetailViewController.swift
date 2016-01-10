@@ -21,6 +21,11 @@ class TaskDetailViewController: UIViewController {
         return controller
     }
     
+    //AlertViewのrootを現在のViewに渡す
+    override func viewDidAppear(animated: Bool) {
+        UIApplication.sharedApplication().keyWindow?.rootViewController = self
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
