@@ -50,6 +50,9 @@ class SprashViewController: UIViewController {
 
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.presentedViewController
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
     }
