@@ -13,17 +13,24 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate {
 
     var window: UIWindow?
+    var topViewController: TopViewController!
     let beaconManager = ESTBeaconManager()
-    
+    var config = Config()
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.beaconManager.delegate = self
         self.beaconManager.requestAlwaysAuthorization()
         self.beaconManager.startMonitoringForRegion(CLBeaconRegion(
             proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!,
             identifier: "monitored region"))
-        
+        let beaconRegion = CLBeaconRegion(
+            proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!,
+            identifier: "ranged region")
+        self.beaconManager.startRangingBeaconsInRegion(beaconRegion)
+
         UIApplication.sharedApplication().registerUserNotificationSettings(
             UIUserNotificationSettings(forTypes: .Alert, categories: nil))
+        
         return true
     }
 
@@ -79,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
 
-            dict[NSUnderlyingErrorKey] = error as NSError
+            dict[NSUnderlyingErrorKey] = error as! NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -117,11 +124,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
     //Estimote
     func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
         print("検知！")
-        let notification = UILocalNotification()
-        notification.alertBody =
-            "次のミッションだ！" +
-            "タスクを確認しろ！"
-        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+//        let notification = UILocalNotification()
+//        notification.alertBody =
+//            "次のミッションだ！" +
+//            "タスクを確認しろ！"
+//        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
     
     func beaconManager(manager: AnyObject, didExitRegion region: CLBeaconRegion) {
@@ -132,7 +139,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
         UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
     
-    
+    func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon],
+        inRegion region: CLBeaconRegion) {
+            if let nearestBeacon = beacons.first {
+                //let places = placesNearBeacon(nearestBeacon)
+                //検知の距離を指定
+                if(nearestBeacon.proximity.rawValue < 3) {
+                    //major:minor値をフォーマット化
+                    let major: String = String(nearestBeacon.major)
+                    let minor: String = String(nearestBeacon.minor)
+                    let beaconKey: String = major + ":" + minor
+                    
+                    print("近くにBeacon(" + beaconKey + ")があります")
+                    
+                    //発見されたBeaconKeyがまだ登録されたものでなければ通知する
+                    if (config.appearedTask != nil) {
+                        let appearedBeacons = config.appearedTask as! [String]
+                        
+                        if (!appearedBeacons.contains(beaconKey)) {
+                            //通知を送信
+                            let notification = UILocalNotification()
+                            notification.alertBody =
+                                "次のミッションだ！" +
+                                "タスクを確認しろ！"
+                            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+                        
+                            //アプリを開いた状態の際の通知はこちら
+                            let alert:UIAlertController = UIAlertController(title:"次のミッションだ！",
+                                message: "タスクを確認しろ！",
+                                preferredStyle: UIAlertControllerStyle.Alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            alert.addAction(defaultAction)
+                            
+                            self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+                        
 
+                        topViewController.reload()
+                        }
+                    }
+                    
+                    //beaconKeyを登録
+                    config.appearedTask = beaconKey
+                } else {
+                    print("近くにBeaconがありません")
+                }
+                
+                // TODO: update the UI here
+                //print(places.first!["title"] as! String) // TODO: remove after implementing the UI
+            }
+    }
+    
 }
 
