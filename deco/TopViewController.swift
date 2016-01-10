@@ -10,25 +10,9 @@ import UIKit
 
 class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableViewDataSource, UITableViewDelegate {
     
-    let placesByBeacons = [
-        //紫
-        "34433:43466": [
-            "title":"むらさきだよ",
-            "description":"クエストはこれだよ"
-        ],
-        //水色
-        "52956:29906": [
-            "title":"水色だよ"
-            
-        ],
-        //黄緑
-        "27426:10315": [
-            "title":"黄緑だよ"
-        ]
-    ]
     
-    var registeredTask: [AnyObject] = []
-    var appearedTask: [AnyObject] = ["ss"]
+    var config = Config()
+    var registeredTask = [:]
     
     private let cellIdentifier = "TaskCell"
     let beaconManager = ESTBeaconManager()
@@ -43,11 +27,12 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Appdelegate
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.topViewController = self
         
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: cellIdentifier)
-        
-
         title = "タスク一覧"
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -56,16 +41,20 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         self.beaconManager.requestAlwaysAuthorization()
         
         loadTask()
+        reload()
         
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if appearedTask.count > 0 {
+        if config.appearedTask!.count > 0 {
             tableView.hidden = false
             totalTaskView.hidden = false
         }
         self.beaconManager.startRangingBeaconsInRegion(self.beaconRegion)
+    }
+    override func viewDidAppear(animated: Bool) {
+        UIApplication.sharedApplication().keyWindow?.rootViewController = self
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -84,34 +73,15 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return appearedTask.count
+        return config.appearedTask!.count
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let controller = TaskDetailViewController.getViewControllerWithTaskId(appearedTask.count)
+        let controller = TaskDetailViewController.getViewControllerWithTaskId(config.appearedTask!.count)
         self.navigationController!.pushViewController(controller, animated: true)
     }
     
-    func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon],
-        inRegion region: CLBeaconRegion) {
-            let beaconsArray:Array = beacons
-            if let nearestBeacon = beacons.first {
-                let places = placesNearBeacon(nearestBeacon)
-                print(nearestBeacon)
-                //print(beaconsArray)
-                
-                // TODO: update the UI here
-                //print(places.first!["title"] as! String) // TODO: remove after implementing the UI
-            }
-    }
     
-    func placesNearBeacon(beacon: CLBeacon) -> [AnyObject] {
-        let beaconKey = "\(beacon.major):\(beacon.minor)"
-        if let places = self.placesByBeacons[beaconKey] {
-            let sortedPlaces = Array(arrayLiteral: places)
-            return sortedPlaces
-        }
-        return []
-    }
+    
     
     //Task.jsonを読み込み
     private func loadTask() {
@@ -119,29 +89,31 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         let fileHandle : NSFileHandle = NSFileHandle(forReadingAtPath: path)!
         let data : NSData = fileHandle.readDataToEndOfFile()
         do {
-            if let json: NSDictionary = try NSJSONSerialization.JSONObjectWithData(data,
-                options: NSJSONReadingOptions.AllowFragments) as? NSDictionary{
-                    
+            let json: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(data,
+                options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                print("jsonは")
                 print(json)
-
-                if let hoge = json["34433:43466"]!["title"] as? String {
+                registeredTask = json
+                if let title = json["34433:43466"]!["title"] as? String {
 //                    self.hoge = hoge
-                    print(hoge)
+                    print(title)
                 } else {
                     print ("存在しない値です")
                 }
-            }
+            
         } catch let error as NSError {
-            print(error.localizedDescription)
             print("error!!!")
+            print(error.localizedDescription)
         }
+    }
+    
+    func reload() {
+        print("reload tables")
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 
