@@ -44,10 +44,6 @@ class SprashViewController: UIViewController {
         alert.addAction(cancelAction)
         alert.addAction(defaultAction)
         presentViewController(alert, animated: true, completion: nil)
-
-
-        
-
     }
     
     override func viewDidAppear(animated: Bool) {

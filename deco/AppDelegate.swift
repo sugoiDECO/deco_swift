@@ -16,6 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
     var topViewController: TopViewController!
     let beaconManager = ESTBeaconManager()
     var config = Config()
+    
+    var taskId: Int!
+    var taskTitle: String!
+    var taskDescription: String!
+    var taskActions = []
+    var taskWays = []
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.beaconManager.delegate = self
@@ -178,7 +184,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
                     
                     //beaconKeyを登録
                     config.appearedTask = beaconKey
-                    topViewController.reload()
+                    if (UIApplication.sharedApplication().keyWindow?.rootViewController == topViewController) {
+                        topViewController.reload()
+                    }
 
                 } else {
                     print("近くにBeaconがありません")

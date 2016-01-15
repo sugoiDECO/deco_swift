@@ -84,6 +84,12 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let controller = TaskDetailViewController.getViewControllerWithTaskId(indexPath.row)
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let beaconName = config.appearedTask![indexPath.row] as! String
+        appDelegate.taskTitle = registeredTask[beaconName]!["title"] as? String
+        appDelegate.taskDescription = registeredTask[beaconName]!["description"] as? String
+        appDelegate.taskActions = registeredTask[beaconName]!["actions"] as! NSArray
+        appDelegate.taskWays = registeredTask[beaconName]!["ways"] as! NSArray
         self.navigationController!.pushViewController(controller, animated: true)
     }
     
