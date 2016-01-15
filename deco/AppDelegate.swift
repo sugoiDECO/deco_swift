@@ -17,9 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
     let beaconManager = ESTBeaconManager()
     var config = Config()
     
-    var taskId: Int!
-    var taskTitle: String!
-    var taskDescription: String!
+    var taskId: Int?
+    var taskTitle: String?
+    var taskDescription: String?
     var taskActions = []
     var taskWays = []
 
@@ -130,11 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
     //Estimote
     func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
         print("検知！")
-//        let notification = UILocalNotification()
-//        notification.alertBody =
-//            "次のミッションだ！" +
-//            "タスクを確認しろ！"
-//        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
     
     func beaconManager(manager: AnyObject, didExitRegion region: CLBeaconRegion) {

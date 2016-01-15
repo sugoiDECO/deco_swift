@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Task Detail View Controller-->
@@ -16,8 +17,145 @@
                     <view key="view" contentMode="scaleToFill" id="KiA-hk-sOm">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0T6-up-epn">
+                                <rect key="frame" x="40" y="82" width="520" height="1"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="400" id="HtK-Jh-d8j"/>
+                                    <constraint firstAttribute="height" constant="0.5" id="lW3-ma-OMR"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="HtK-Jh-d8j"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mWD-Cw-2M5">
+                                <rect key="frame" x="40" y="50" width="520" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="bj8-Qi-lB3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="bj8-Qi-lB3"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="アクション" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yy5-EY-wem">
+                                <rect key="frame" x="40" y="191" width="520" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKp-fa-FCo">
+                                <rect key="frame" x="40" y="220" width="520" height="0.0"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="8cB-BW-0UA"/>
+                                    <constraint firstAttribute="height" constant="0.5" id="P5Z-19-O60"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="8cB-BW-0UA"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wYY-Oj-BhC">
+                                <rect key="frame" x="40" y="228" width="520" height="38"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="4Dj-J5-Tu9"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手段" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ROV-bd-reG">
+                                <rect key="frame" x="40" y="296" width="520" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ixZ-yE-MPI">
+                                <rect key="frame" x="40" y="328" width="520" height="1"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="GmC-2W-S3x"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gJS-YX-3hQ">
+                                <rect key="frame" x="40" y="337" width="520" height="34"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="gd4-05-n9U"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fhV-sO-VJr">
+                                <rect key="frame" x="40" y="91" width="520" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="2RP-wR-d3h"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="0T6-up-epn" secondAttribute="trailing" constant="20" id="1tH-yj-Yz7"/>
+                            <constraint firstItem="0T6-up-epn" firstAttribute="top" secondItem="mWD-Cw-2M5" secondAttribute="bottom" constant="5" id="2gC-oY-Llf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wYY-Oj-BhC" secondAttribute="trailing" constant="20" id="3Ed-xZ-bfi"/>
+                            <constraint firstItem="mWD-Cw-2M5" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="4dB-7y-fM8"/>
+                            <constraint firstItem="gJS-YX-3hQ" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="4sL-4I-C6u"/>
+                            <constraint firstItem="Yy5-EY-wem" firstAttribute="top" secondItem="fhV-sO-VJr" secondAttribute="bottom" constant="50" id="5ra-Wg-9pQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gJS-YX-3hQ" secondAttribute="trailing" constant="20" id="69d-zy-W6x"/>
+                            <constraint firstItem="wYY-Oj-BhC" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="7vS-Si-RG7"/>
+                            <constraint firstItem="GKp-fa-FCo" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="BAo-F5-ukJ"/>
+                            <constraint firstItem="fhV-sO-VJr" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="Chc-96-D4M"/>
+                            <constraint firstItem="mWD-Cw-2M5" firstAttribute="top" secondItem="ab5-Fh-t6e" secondAttribute="bottom" constant="30" id="Hxm-WD-CGc"/>
+                            <constraint firstItem="fhV-sO-VJr" firstAttribute="top" secondItem="0T6-up-epn" secondAttribute="bottom" constant="8" id="LNA-jW-ZMa"/>
+                            <constraint firstItem="mWD-Cw-2M5" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="50" id="Pcj-zT-6j5"/>
+                            <constraint firstItem="psa-kg-Yf1" firstAttribute="top" secondItem="mWD-Cw-2M5" secondAttribute="bottom" constant="510" id="Puk-Po-ouW"/>
+                            <constraint firstItem="ixZ-yE-MPI" firstAttribute="top" secondItem="ROV-bd-reG" secondAttribute="bottom" constant="5" id="Qu3-wU-p5Z"/>
+                            <constraint firstItem="Yy5-EY-wem" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="Tzd-Eu-45h"/>
+                            <constraint firstItem="wYY-Oj-BhC" firstAttribute="top" secondItem="GKp-fa-FCo" secondAttribute="bottom" constant="8" id="VFn-Bg-on2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ROV-bd-reG" secondAttribute="trailing" constant="20" id="WrV-ea-lXW"/>
+                            <constraint firstItem="0T6-up-epn" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="50" id="Y1D-Sd-yHs"/>
+                            <constraint firstItem="ROV-bd-reG" firstAttribute="top" secondItem="wYY-Oj-BhC" secondAttribute="bottom" constant="30" id="YaV-Sz-ucX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mWD-Cw-2M5" secondAttribute="trailing" constant="20" id="an5-iG-60r"/>
+                            <constraint firstItem="ixZ-yE-MPI" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="eGA-fx-eNs"/>
+                            <constraint firstItem="GKp-fa-FCo" firstAttribute="top" secondItem="Yy5-EY-wem" secondAttribute="bottom" constant="2" id="fnU-QU-iic"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Yy5-EY-wem" secondAttribute="trailing" constant="20" id="iAO-9W-VqY"/>
+                            <constraint firstItem="ROV-bd-reG" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="miw-zF-bzt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GKp-fa-FCo" secondAttribute="trailing" constant="20" id="n8X-cc-ZrP"/>
+                            <constraint firstItem="0T6-up-epn" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="psB-cW-1Vi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ixZ-yE-MPI" secondAttribute="trailing" constant="20" id="r2f-ow-BJq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fhV-sO-VJr" secondAttribute="trailing" constant="20" id="vWV-zc-L3C"/>
+                            <constraint firstItem="gJS-YX-3hQ" firstAttribute="top" secondItem="ixZ-yE-MPI" secondAttribute="bottom" constant="8" id="xI4-jo-ldp"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Pcj-zT-6j5"/>
+                                <exclude reference="Y1D-Sd-yHs"/>
+                                <exclude reference="Puk-Po-ouW"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="taskActions" destination="wYY-Oj-BhC" id="2Pf-tM-yhe"/>
+                        <outlet property="taskDescription" destination="fhV-sO-VJr" id="qLh-7q-8W7"/>
+                        <outlet property="taskTitle" destination="mWD-Cw-2M5" id="A8d-ha-b5G"/>
+                        <outlet property="taskWays" destination="gJS-YX-3hQ" id="XUT-0d-aXz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KhD-MK-u1S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

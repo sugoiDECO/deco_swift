@@ -41,7 +41,7 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         self.beaconManager.requestAlwaysAuthorization()
         
         loadTask()
-        reload()
+//        reload()
         
     }
     
