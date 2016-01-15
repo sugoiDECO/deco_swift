@@ -41,7 +41,7 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         self.beaconManager.requestAlwaysAuthorization()
         
         loadTask()
-//        reload()
+        reload()
         
     }
     
@@ -125,6 +125,9 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         if config.appearedTask != nil {
             tableView.hidden = false
             totalTaskView.hidden = false
+        } else {
+            tableView.hidden = true
+            totalTaskView.hidden = true
         }
         
         self.tableView.reloadData()
