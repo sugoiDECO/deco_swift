@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
     var taskDescription: String?
     var taskActions = []
     var taskWays = []
+    
+    var rangeOfBeacon: Int = 3
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.beaconManager.delegate = self
@@ -145,7 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
             if let nearestBeacon = beacons.first {
                 //let places = placesNearBeacon(nearestBeacon)
                 //検知の距離を指定
-                if(nearestBeacon.proximity.rawValue < 3) {
+                if(nearestBeacon.proximity.rawValue < rangeOfBeacon) {
                     //major:minor値をフォーマット化
                     let major: String = String(nearestBeacon.major)
                     let minor: String = String(nearestBeacon.minor)
@@ -173,12 +175,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
                             alert.addAction(defaultAction)
                             
                             self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-
+                            
+//                            //idを配列に追加
+//                            config.setBeaconId(String)
                         }
+                    } else {
+                        //beaconKeyを登録
+                        config.appearedTask = beaconKey
                     }
-                    
-                    //beaconKeyを登録
-                    config.appearedTask = beaconKey
                     if (UIApplication.sharedApplication().keyWindow?.rootViewController == topViewController) {
                         topViewController.reload()
                     }
