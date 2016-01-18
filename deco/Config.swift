@@ -51,6 +51,10 @@ class Config {
             
         }
     }
+    
+    func setBeaconId(beaconId: String) {
+        userDefault.setBool(false, forKey: beaconId)
+    }
 
     
 }
