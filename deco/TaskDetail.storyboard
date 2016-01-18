@@ -108,6 +108,18 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2X-bm-hHF">
+                                <rect key="frame" x="40" y="500" width="520" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="fPK-jM-YZU"/>
+                                </constraints>
+                                <state key="normal" title="タスク完了！" backgroundImage="btnBg">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapCompleteBtn:" destination="Hlg-qj-3uS" eventType="touchUpInside" id="c0z-uz-YwN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -121,8 +133,10 @@
                             <constraint firstItem="wYY-Oj-BhC" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="7vS-Si-RG7"/>
                             <constraint firstItem="GKp-fa-FCo" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="BAo-F5-ukJ"/>
                             <constraint firstItem="fhV-sO-VJr" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="Chc-96-D4M"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="c2X-bm-hHF" secondAttribute="trailing" constant="20" id="GDg-Og-vRM"/>
                             <constraint firstItem="mWD-Cw-2M5" firstAttribute="top" secondItem="ab5-Fh-t6e" secondAttribute="bottom" constant="30" id="Hxm-WD-CGc"/>
                             <constraint firstItem="fhV-sO-VJr" firstAttribute="top" secondItem="0T6-up-epn" secondAttribute="bottom" constant="8" id="LNA-jW-ZMa"/>
+                            <constraint firstItem="c2X-bm-hHF" firstAttribute="top" secondItem="gJS-YX-3hQ" secondAttribute="bottom" constant="40" id="M9n-fO-fz1"/>
                             <constraint firstItem="mWD-Cw-2M5" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="50" id="Pcj-zT-6j5"/>
                             <constraint firstItem="psa-kg-Yf1" firstAttribute="top" secondItem="mWD-Cw-2M5" secondAttribute="bottom" constant="510" id="Puk-Po-ouW"/>
                             <constraint firstItem="ixZ-yE-MPI" firstAttribute="top" secondItem="ROV-bd-reG" secondAttribute="bottom" constant="5" id="Qu3-wU-p5Z"/>
@@ -135,10 +149,12 @@
                             <constraint firstItem="ixZ-yE-MPI" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="eGA-fx-eNs"/>
                             <constraint firstItem="GKp-fa-FCo" firstAttribute="top" secondItem="Yy5-EY-wem" secondAttribute="bottom" constant="2" id="fnU-QU-iic"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Yy5-EY-wem" secondAttribute="trailing" constant="20" id="iAO-9W-VqY"/>
+                            <constraint firstItem="psa-kg-Yf1" firstAttribute="top" secondItem="c2X-bm-hHF" secondAttribute="bottom" constant="50" id="ics-ql-gkm"/>
                             <constraint firstItem="ROV-bd-reG" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="miw-zF-bzt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GKp-fa-FCo" secondAttribute="trailing" constant="20" id="n8X-cc-ZrP"/>
                             <constraint firstItem="0T6-up-epn" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="psB-cW-1Vi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ixZ-yE-MPI" secondAttribute="trailing" constant="20" id="r2f-ow-BJq"/>
+                            <constraint firstItem="c2X-bm-hHF" firstAttribute="leading" secondItem="KiA-hk-sOm" secondAttribute="leadingMargin" constant="20" id="skp-T8-Rx6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fhV-sO-VJr" secondAttribute="trailing" constant="20" id="vWV-zc-L3C"/>
                             <constraint firstItem="gJS-YX-3hQ" firstAttribute="top" secondItem="ixZ-yE-MPI" secondAttribute="bottom" constant="8" id="xI4-jo-ldp"/>
                         </constraints>
@@ -146,6 +162,7 @@
                             <mask key="constraints">
                                 <exclude reference="Pcj-zT-6j5"/>
                                 <exclude reference="Y1D-Sd-yHs"/>
+                                <exclude reference="M9n-fO-fz1"/>
                                 <exclude reference="Puk-Po-ouW"/>
                             </mask>
                         </variation>
@@ -162,4 +179,7 @@
             <point key="canvasLocation" x="393" y="274"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="btnBg" width="566" height="88"/>
+    </resources>
 </document>
