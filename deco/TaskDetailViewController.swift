@@ -13,6 +13,7 @@ class TaskDetailViewController: UIViewController {
     @IBOutlet weak var taskDescription: UITextView!
     @IBOutlet weak var taskActions: UITextView!
     @IBOutlet weak var taskWays: UITextView!
+    var config = Config()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +72,38 @@ class TaskDetailViewController: UIViewController {
         var newFrame = taskWays.frame
         newFrame.size = CGSizeMake(max(newSize.width, fixedWidth), newSize.height)
         taskWays.frame = newFrame
+    }
+    
+    @IBAction func tapCompleteBtn (sender: AnyObject) {
+        let alert:UIAlertController = UIAlertController(title:"タスクを完了しますか？",
+            message: "",
+            preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction:UIAlertAction = UIAlertAction(title: "Cancel",
+            style: UIAlertActionStyle.Cancel,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+        })
+        let defaultAction:UIAlertAction = UIAlertAction(title: "OK",
+            style: UIAlertActionStyle.Default,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+                
+                let okAlert:UIAlertController = UIAlertController(title:"タスク完了！",
+                    message: "",
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                let OKAction:UIAlertAction = UIAlertAction(title: "OK",
+                    style: UIAlertActionStyle.Default,
+                    handler:{
+                        (action:UIAlertAction!) -> Void in
+                        
+                })
+                okAlert.addAction(OKAction)
+                self.presentViewController(okAlert, animated: true, completion: nil)
+        })
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        presentViewController(alert, animated: true, completion: nil)
     }
     //AlertViewのrootを現在のViewに渡す
     override func viewDidAppear(animated: Bool) {
