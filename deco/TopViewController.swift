@@ -12,14 +12,14 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     
     
     var config = Config()
-    var registeredTask = [:]
     
     private let cellIdentifier = "TaskCell"
     let beaconManager = ESTBeaconManager()
     let beaconRegion = CLBeaconRegion(
         proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!,
         identifier: "ranged region")
-    
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
     //UI
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalTaskView: UIView!
@@ -39,8 +39,6 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         
         self.beaconManager.delegate = self
         self.beaconManager.requestAlwaysAuthorization()
-        
-        loadTask()
         reload()
         
     }
@@ -62,7 +60,7 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TaskCell
         let beaconName = config.appearedTask![indexPath.row] as! String
-        if let title = registeredTask[beaconName]!["title"] as? String {
+        if let title = appDelegate.registeredTask[beaconName]!["title"] as? String {
             cell.taskTitle.text = title
         } else {
             print("jsonエラー")
@@ -86,40 +84,17 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         let controller = TaskDetailViewController.getViewControllerWithTaskId(indexPath.row)
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let beaconName = config.appearedTask![indexPath.row] as! String
-        appDelegate.taskTitle = registeredTask[beaconName]!["title"] as? String
-        appDelegate.taskDescription = registeredTask[beaconName]!["description"] as? String
-        appDelegate.taskActions = registeredTask[beaconName]!["actions"] as! NSArray
-        appDelegate.taskWays = registeredTask[beaconName]!["ways"] as! NSArray
+        appDelegate.taskTitle = appDelegate.registeredTask[beaconName]!["title"] as? String
+        appDelegate.taskDescription = appDelegate.registeredTask[beaconName]!["description"] as? String
+        appDelegate.taskActions = appDelegate.registeredTask[beaconName]!["actions"] as! NSArray
+        appDelegate.taskWays = appDelegate.registeredTask[beaconName]!["ways"] as! NSArray
         self.navigationController!.pushViewController(controller, animated: true)
     }
     
     
     
     
-    //Task.jsonを読み込み
-    private func loadTask() {
-        let path : String = NSBundle.mainBundle().pathForResource("Task", ofType: "json")!
-        let fileHandle : NSFileHandle = NSFileHandle(forReadingAtPath: path)!
-        let data : NSData = fileHandle.readDataToEndOfFile()
-        do {
-            let json: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(data,
-                options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                //print("jsonは")
-                //print(json)
-                registeredTask = json
-                if let title = json["34433:43466"]!["title"] as? String {
-//                    self.hoge = hoge
-                    print(title)
-                } else {
-                    print ("存在しない値です")
-                }
-            
-        } catch let error as NSError {
-            print("error!!!")
-            print(error.localizedDescription)
-        }
-    }
-    
+        
     func reload() {
         print("reload tables")
         if config.appearedTask != nil {

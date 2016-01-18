@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
     var topViewController: TopViewController!
     let beaconManager = ESTBeaconManager()
     var config = Config()
-    
+    var registeredTask = [:]
+
     var taskId: Int?
     var taskTitle: String?
     var taskDescription: String?
@@ -35,7 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
             proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!,
             identifier: "ranged region")
         self.beaconManager.startRangingBeaconsInRegion(beaconRegion)
-
+        
+        loadTask()
         UIApplication.sharedApplication().registerUserNotificationSettings(
             UIUserNotificationSettings(forTypes: .Alert, categories: nil))
         
@@ -129,6 +131,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
         }
     }
     
+    //Task.jsonを読み込み
+    func loadTask() {
+        let path : String = NSBundle.mainBundle().pathForResource("Task", ofType: "json")!
+        let fileHandle : NSFileHandle = NSFileHandle(forReadingAtPath: path)!
+        let data : NSData = fileHandle.readDataToEndOfFile()
+        do {
+            let json: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(data,
+                options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+            //print("jsonは")
+            //print(json)
+            registeredTask = json
+            if let title = json["34433:43466"]!["title"] as? String {
+                //                    self.hoge = hoge
+                print(title)
+            } else {
+                print ("存在しない値です")
+            }
+            
+        } catch let error as NSError {
+            print("error!!!")
+            print(error.localizedDescription)
+        }
+    }
+
+    
     //Estimote
     func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
         print("検知！")
@@ -176,12 +203,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
                             
                             self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
                             
-//                            //idを配列に追加
-//                            config.setBeaconId(String)
                         }
+                        
                     } else {
                         //beaconKeyを登録
                         config.appearedTask = beaconKey
+                        //idを配列に追加
+                        
+
                     }
                     if (UIApplication.sharedApplication().keyWindow?.rootViewController == topViewController) {
                         topViewController.reload()
