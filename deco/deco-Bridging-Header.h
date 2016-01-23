@@ -9,7 +9,6 @@
 #ifndef deco_Bridging_Header_h
 #define deco_Bridging_Header_h
 
-#import <SVProgressHUD/SVProgressHUD.h>
 #import <EstimoteSDK/EstimoteSDK.h>
 
 

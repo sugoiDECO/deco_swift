@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SVProgressHUD
 
 class TaskDetailViewController: UIViewController {
     @IBOutlet weak var taskTitle: UILabel!
@@ -135,7 +136,30 @@ class TaskDetailViewController: UIViewController {
     }
     
     func sendToServer() {
+        let requestBody = [
+            "issue": [
+                "project_id": "60",
+                "subject": "Task from iPad(" + appDelegate.ipadName + ")" + "taskIdは" + taskId,
+                "geometry": appDelegate.geometry,
+                "assigned_to_id": appDelegate.ipadName,
+                "status_id": "3"
+            ]
+        ]
         
+        SVProgressHUD.show()
+
+        let user = appDelegate.user
+        let password = appDelegate.password
+        
+        let credentialData = "\(user):\(password)".dataUsingEncoding(NSUTF8StringEncoding)!
+        let base64Credentials = credentialData.base64EncodedStringWithOptions([])
+        
+        let headers = ["Authorization": "Basic \(base64Credentials)"]
+        Alamofire.request(.POST, appDelegate.baseUrl + appDelegate.endPoint, parameters: requestBody, encoding: .JSON, headers: headers)
+            .responseJSON { response in
+                print(response)
+                SVProgressHUD.dismiss()
+            }
     }
     //AlertViewのrootを現在のViewに渡す
     override func viewDidAppear(animated: Bool) {

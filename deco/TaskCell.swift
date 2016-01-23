@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class TaskCell: UITableViewCell {
     var config = Config()
