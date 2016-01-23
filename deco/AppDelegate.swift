@@ -45,26 +45,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
     }
 
     func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
 
@@ -122,8 +114,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
             do {
                 try managedObjectContext.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
                 abort()
@@ -171,87 +161,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
     
     func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon],
         inRegion region: CLBeaconRegion) {
-            if let nearestBeacon = beacons.first {
-                //let places = placesNearBeacon(nearestBeacon)
-                //検知の距離を指定
-                if(nearestBeacon.proximity.rawValue < rangeOfBeacon) {
-                    //major:minor値をフォーマット化
-                    let major: String = String(nearestBeacon.major)
-                    let minor: String = String(nearestBeacon.minor)
-                    let beaconKey: String = major + ":" + minor
+        if let nearestBeacon = beacons.first {
+            //let places = placesNearBeacon(nearestBeacon)
+            //検知の距離を指定
+            if(nearestBeacon.proximity.rawValue < rangeOfBeacon) {
+                //major:minor値をフォーマット化
+                let major: String = String(nearestBeacon.major)
+                let minor: String = String(nearestBeacon.minor)
+                let beaconKey: String = major + ":" + minor
                     
-                    print("近くにBeacon(" + beaconKey + ")があります")
-                    if ((registeredTask[beaconKey]) != nil) {
-                        print("このBeaconは" + String(registeredTask[beaconKey]))
-                        if (config.appearedTask != nil) {
-                            let appearedBeacons = config.appearedTask as! [String]
-                            //発見されたBeaconKeyがまだ登録されたものでなければ通知する
-                            if (!appearedBeacons.contains(beaconKey)) {
-                            
-                                config.setBeaconId(registeredTask[beaconKey]!["id"] as! String)
-                                //通知を送信
-                                let notification = UILocalNotification()
-                                notification.alertBody =
-                                    "次のミッションだ！" +
-                                "タスクを確認しろ！"
-                                UIApplication.sharedApplication().presentLocalNotificationNow(notification)
-                                
-                                //アプリを開いた状態の際の通知はこちら
-                                let alert:UIAlertController = UIAlertController(title:"次のミッションだ！",
-                                    message: "タスクを確認しろ！",
-                                    preferredStyle: UIAlertControllerStyle.Alert)
-                                let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                                alert.addAction(defaultAction)
-                                
-                                self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-                            } else {
-                                print(beaconKey + "は既に表示されているBeaconです")
-                            }
+                print("近くにBeacon(" + beaconKey + ")があります")
+                if ((registeredTask[beaconKey]) != nil) {
+                    print("このBeaconは" + String(registeredTask[beaconKey]))
+                    if (config.appearedTask != nil) {
+                        let appearedBeacons = config.appearedTask as! [String]
+                        //発見されたBeaconKeyがまだ登録されたものでなければ通知する
+                        if (!appearedBeacons.contains(beaconKey)) {
                         
+                            config.setBeaconId(registeredTask[beaconKey]!["id"] as! String)
+                            //通知を送信
+                            let notification = UILocalNotification()
+                            notification.alertBody =
+                                "次のミッションだ！" +
+                                "タスクを確認しろ！"
+                            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+                                
+                            //アプリを開いた状態の際の通知はこちら
+                            let alert:UIAlertController = UIAlertController(title:"次のミッションだ！",
+                                message: "タスクを確認しろ！",
+                                preferredStyle: UIAlertControllerStyle.Alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            alert.addAction(defaultAction)
+                                
+                            self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
                         } else {
-                            
+                            print(beaconKey + "は既に表示されているBeaconです")
                         }
-                        //beaconKeyを登録
-                        config.appearedTask = beaconKey
-                        //beaconKeyを登録
-//                        config.appearedTask = beaconKey
-//                        if (registeredTask[beaconKey] != nil && !config.userDefault.boolForKey(registeredTask[beaconKey]!["id"] as! String)) {
-//                            //idをudに追加
-//                            config.setBeaconId(registeredTask[beaconKey]!["id"] as! String)
-//                        
-//                            //通知を送信
-//                            let notification = UILocalNotification()
-//                            notification.alertBody =
-//                                "次のミッションだ！" +
-//                            "タスクを確認しろ！"
-//                            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
-//                        
-//                            //アプリを開いた状態の際の通知はこちら
-//                            let alert:UIAlertController = UIAlertController(title:"次のミッションだ！",
-//                                message: "タスクを確認しろ！",
-//                                preferredStyle: UIAlertControllerStyle.Alert)
-//                            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-//                            alert.addAction(defaultAction)
-//                        
-//                            self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-//                        } else {
-//                            print(beaconKey + "は登録されていないBeaconです")
-//                        }
-                        //リストのViewの時はリロードする
-                        if (UIApplication.sharedApplication().keyWindow?.rootViewController == topViewController) {
-                            topViewController.reload()
-                        }
+                        
                     } else {
-                        print("登録されていないBeaconです")
+                            
+                    }
+                    //beaconKeyを登録
+                    config.appearedTask = beaconKey
+                        //リストのViewの時はリロードする
+                    if (UIApplication.sharedApplication().keyWindow?.rootViewController == topViewController) {
+                        topViewController.reload()
                     }
                 } else {
-                    print("近くにBeaconがありません")
+                    print("登録されていないBeaconです")
                 }
-                
-                // TODO: update the UI here
-                //print(places.first!["title"] as! String) // TODO: remove after implementing the UI
+            } else {
+                print("近くにBeaconがありません")
             }
+        }
     }
-    
 }
 
