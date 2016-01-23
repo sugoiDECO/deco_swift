@@ -23,7 +23,7 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     //UI
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalTaskView: UIView!
-    
+    @IBOutlet weak var finishTaskCount: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +65,8 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         } else {
             print("jsonエラー")
         }
+        let taskId = appDelegate.registeredTask[beaconName]!["id"] as? String
+        cell.setupCell(taskId!)
 //        cell.setupCell(appearedTask[indexPath.row], rank: indexPath.row + 1)
         return cell
     }
@@ -88,6 +90,7 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         appDelegate.taskDescription = appDelegate.registeredTask[beaconName]!["description"] as? String
         appDelegate.taskActions = appDelegate.registeredTask[beaconName]!["actions"] as! NSArray
         appDelegate.taskWays = appDelegate.registeredTask[beaconName]!["ways"] as! NSArray
+        appDelegate.taskId = appDelegate.registeredTask[beaconName]!["id"] as? String
         self.navigationController!.pushViewController(controller, animated: true)
     }
     
@@ -100,10 +103,8 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
         if config.appearedTask != nil {
             tableView.hidden = false
             totalTaskView.hidden = false
-        } else {
-            tableView.hidden = true
-            totalTaskView.hidden = true
-        }
+        } 
+        finishTaskCount.text = String(config.userDefault.integerForKey("finishTaskCount"))
         
         self.tableView.reloadData()
     }

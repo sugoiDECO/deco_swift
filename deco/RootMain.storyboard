@@ -245,6 +245,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="p3F-5i-DPm"/>
                     <connections>
+                        <outlet property="finishTaskCount" destination="xoj-SK-em6" id="KfV-E0-nPi"/>
                         <outlet property="tableView" destination="ceJ-7R-1gL" id="BIz-Ql-IzW"/>
                         <outlet property="totalTaskView" destination="Lik-LN-jdi" id="hey-es-jQE"/>
                     </connections>

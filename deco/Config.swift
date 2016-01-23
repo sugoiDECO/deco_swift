@@ -40,10 +40,12 @@ class Config {
                 if (!beacons.contains(newValue as! String)) {
                     beacons.append(newValue as! String)
                     userDefault.setObject(beacons, forKey: beaconKey)
+                    userDefault.synchronize()
                 }
             } else {
                 print("まだUserDefaultに登録されていません")
                 userDefault.setObject(beacons, forKey: beaconKey)
+                userDefault.synchronize()
             }
             
             print("beacons")
@@ -54,7 +56,10 @@ class Config {
     
     func setBeaconId(beaconId: String) {
         userDefault.setBool(false, forKey: beaconId)
+        userDefault.synchronize()
     }
+    
+    
 
     
 }

@@ -4,7 +4,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'deco' do
-	pod 'AFNetworking'
+	pod 'Alamofire', '~> 3.0'
 	pod 'SVProgressHUD'
 	pod 'EstimoteSDK'
 end

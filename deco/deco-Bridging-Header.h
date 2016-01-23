@@ -10,7 +10,6 @@
 #define deco_Bridging_Header_h
 
 #import <SVProgressHUD/SVProgressHUD.h>
-#import <AFNetworking/AFNetworking.h>
 #import <EstimoteSDK/EstimoteSDK.h>
 
 

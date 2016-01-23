@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import Alamofire
 
 class TaskDetailViewController: UIViewController {
     @IBOutlet weak var taskTitle: UILabel!
     @IBOutlet weak var taskDescription: UITextView!
     @IBOutlet weak var taskActions: UITextView!
     @IBOutlet weak var taskWays: UITextView!
+    @IBOutlet weak var completeBtn: UIButton!
+    var taskId: String! = ""
     var config = Config()
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +27,7 @@ class TaskDetailViewController: UIViewController {
         taskDescription.text = appDelegate.taskDescription
         taskActions.text = ""
         taskWays.text = ""
-        print(appDelegate.taskActions.count)
+
         for action in appDelegate.taskActions {
             taskActions.text = taskActions.text + "・" + (action as! String) + "\n"
         }
@@ -31,7 +35,16 @@ class TaskDetailViewController: UIViewController {
         for way in appDelegate.taskWays {
             taskWays.text = taskWays.text + "・" + (way as! String) + "\n"
         }
-        
+        updateStatus()
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        taskId = appDelegate.taskId
+        print("taskIdは>>>>>>>>>>>>>>" + taskId)
+        print("Statusは" + String(config.userDefault.boolForKey(taskId)))
+        updateStatus()
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -96,7 +109,13 @@ class TaskDetailViewController: UIViewController {
                     style: UIAlertActionStyle.Default,
                     handler:{
                         (action:UIAlertAction!) -> Void in
-                        
+                        //task終了フラグを立てる
+                        self.config.userDefault.setBool(true, forKey: self.taskId)
+                        self.config.userDefault.synchronize()
+                        var totalCount = self.config.userDefault.integerForKey("finishTaskCount")
+                        totalCount++
+                        self.config.userDefault.setInteger(totalCount, forKey: "finishTaskCount")
+                        self.updateStatus()
                 })
                 okAlert.addAction(OKAction)
                 self.presentViewController(okAlert, animated: true, completion: nil)
@@ -104,6 +123,19 @@ class TaskDetailViewController: UIViewController {
         alert.addAction(cancelAction)
         alert.addAction(defaultAction)
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func updateStatus() {
+        if(config.userDefault.boolForKey(taskId) == true) {
+            print("ud" + String(config.userDefault.boolForKey(taskId)))
+            completeBtn.alpha = 0.4
+            completeBtn.enabled = false
+            sendToServer()
+        }
+    }
+    
+    func sendToServer() {
+        
     }
     //AlertViewのrootを現在のViewに渡す
     override func viewDidAppear(animated: Bool) {

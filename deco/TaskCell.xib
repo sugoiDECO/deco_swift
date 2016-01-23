@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -22,15 +23,21 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j76-jz-LmG">
-                        <rect key="frame" x="256" y="16" width="50" height="50"/>
+                        <rect key="frame" x="296" y="29" width="30" height="24"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="Zih-RX-fLk"/>
-                            <constraint firstAttribute="width" constant="50" id="msG-nH-zf9"/>
+                            <constraint firstAttribute="width" constant="30" id="msG-nH-zf9"/>
+                            <constraint firstAttribute="width" secondItem="j76-jz-LmG" secondAttribute="height" multiplier="5:4" id="qds-4e-T7S"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Zih-RX-fLk"/>
+                            </mask>
+                        </variation>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="j76-jz-LmG" secondAttribute="trailing" constant="20" id="0Qg-rh-Pzu"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="j76-jz-LmG" secondAttribute="trailing" id="0Qg-rh-Pzu"/>
                     <constraint firstItem="IGs-PA-S2O" firstAttribute="leading" secondItem="6rw-ga-fNo" secondAttribute="leadingMargin" constant="15" id="8CE-ve-VHD"/>
                     <constraint firstItem="j76-jz-LmG" firstAttribute="centerY" secondItem="6rw-ga-fNo" secondAttribute="centerY" id="MG7-UT-SEV"/>
                     <constraint firstItem="IGs-PA-S2O" firstAttribute="centerY" secondItem="6rw-ga-fNo" secondAttribute="centerY" id="QHY-F9-Wd1"/>
