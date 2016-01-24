@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
     
     let rangeOfBeacon: Int = 3
     //A→109、B→110
-    let ipadName = "109"
+    let ipadName = "110"
     
     var baseUrl: String = "http://beta.shirasete.jp"
     var endPoint: String = "/projects/60/issues.json"
@@ -60,8 +60,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
 
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = 30
         locationManager.startUpdatingLocation()
-        locationManager.distanceFilter = 10.0
+        locationManager.startMonitoringSignificantLocationChanges()
+        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.allowsBackgroundLocationUpdates = true
+        
         geometry = "{\"type\":\"Point\",\"coordinates\":[\(lng),\(lat)]}"
         
         return true
@@ -177,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
             .responseJSON { response in
                 print(response)
         }
-        locationManager.stopUpdatingLocation()
+//        locationManager.stopUpdatingLocation()
     }
     
  

@@ -279,6 +279,11 @@
 					CF9273551C1D937B0008A86F = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 9CSCXF22U7;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					CF92736C1C1D937B0008A86F = {
 						CreatedOnToolsVersion = 7.2;

@@ -117,6 +117,7 @@ class TaskDetailViewController: UIViewController {
                         totalCount++
                         self.config.userDefault.setInteger(totalCount, forKey: "finishTaskCount")
                         self.updateStatus()
+                        self.sendToServer()
                 })
                 okAlert.addAction(OKAction)
                 self.presentViewController(okAlert, animated: true, completion: nil)
@@ -131,7 +132,6 @@ class TaskDetailViewController: UIViewController {
             print("ud" + String(config.userDefault.boolForKey(taskId)))
             completeBtn.alpha = 0.4
             completeBtn.enabled = false
-            sendToServer()
         }
     }
     
