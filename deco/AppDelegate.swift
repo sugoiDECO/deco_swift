@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
     
     let rangeOfBeacon: Int = 5
     //A→109、B→110
-    let ipadName = "111"
+    let ipadName = "109"
     
     var baseUrl: String = "http://beta.shirasete.jp"
     var endPoint: String = "/projects/61/issues.json"
@@ -143,7 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
     
     //Task.jsonを読み込み
     func loadTask() {
-        let path : String = NSBundle.mainBundle().pathForResource("Task", ofType: "json")!
+        let path : String = NSBundle.mainBundle().pathForResource("sumiyoshi", ofType: "json")!
         let fileHandle : NSFileHandle = NSFileHandle(forReadingAtPath: path)!
         let data : NSData = fileHandle.readDataToEndOfFile()
         do {
