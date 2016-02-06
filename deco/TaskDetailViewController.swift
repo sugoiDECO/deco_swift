@@ -110,6 +110,14 @@ class TaskDetailViewController: UIViewController {
                     style: UIAlertActionStyle.Default,
                     handler:{
                         (action:UIAlertAction!) -> Void in
+                        //Twitterへ遷移
+//                        let tweet = "twitter://post?message=@DECO_HONBU" + self.appDelegate.taskTitle! + "のタスクを完了しました！#DECO_OSK"
+                        let tweet = "twitter://post?message=@DECO_HONBU " + self.appDelegate.taskTitle! + "のタスクを完了しました! #DECO_OSK"
+                        let encodedTweet = tweet.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                        print(tweet)
+                        let url = NSURL(string: encodedTweet)!
+                        UIApplication.sharedApplication().openURL(url)
+                        
                         //task終了フラグを立てる
                         self.config.userDefault.setBool(true, forKey: self.taskId)
                         self.config.userDefault.synchronize()
