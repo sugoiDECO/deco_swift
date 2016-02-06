@@ -59,8 +59,8 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TaskCell
-        let beaconName = config.appearedTask![indexPath.row] as! String
-        if let title = appDelegate.registeredTask[beaconName]!["title"] as? String {
+        let beaconName = (config.appearedTask! as! NSArray)[indexPath.row] as! String
+        if let title = (appDelegate.registeredTask[beaconName]!["title"]) as? String {
             cell.taskTitle.text = title
         } else {
             print("jsonエラー")
@@ -85,7 +85,7 @@ class TopViewController: UIViewController, ESTBeaconManagerDelegate, UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let controller = TaskDetailViewController.getViewControllerWithTaskId(indexPath.row)
         let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let beaconName = config.appearedTask![indexPath.row] as! String
+        let beaconName = (config.appearedTask as! NSArray)[indexPath.row] as! String
         appDelegate.taskTitle = appDelegate.registeredTask[beaconName]!["title"] as? String
         appDelegate.taskDescription = appDelegate.registeredTask[beaconName]!["description"] as? String
         appDelegate.taskActions = appDelegate.registeredTask[beaconName]!["actions"] as! NSArray
