@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Alamofire
 import SVProgressHUD
+import AudioToolbox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate, CLLocationManagerDelegate {
@@ -26,12 +27,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
     var taskActions = []
     var taskWays = []
     
-    let rangeOfBeacon: Int = 3
+    let rangeOfBeacon: Int = 5
     //A→109、B→110
-    let ipadName = "110"
+    let ipadName = "111"
     
     var baseUrl: String = "http://beta.shirasete.jp"
-    var endPoint: String = "/projects/60/issues.json"
+    var endPoint: String = "/projects/61/issues.json"
     let user = "kurohune538"
     let password = "12345678"
     
@@ -166,7 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
         //位置を本部に送信
         let requestBody = [
             "issue": [
-                "project_id": "60",
+                "project_id": "61",
                 "subject": "Post from iPad(" + ipadName + ")",
                 "geometry": geometry,
                 "assigned_to_id": ipadName,
@@ -236,7 +237,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate,
                                 preferredStyle: UIAlertControllerStyle.Alert)
                             let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                             alert.addAction(defaultAction)
-                                
+                            AudioServicesPlaySystemSound(SystemSoundID(1304))
                             self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
                         } else {
                             print(beaconKey + "は既に表示されているBeaconです")
