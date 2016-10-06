@@ -122,7 +122,7 @@ class TaskDetailViewController: UIViewController {
                         self.config.userDefault.setBool(true, forKey: self.taskId)
                         self.config.userDefault.synchronize()
                         var totalCount = self.config.userDefault.integerForKey("finishTaskCount")
-                        totalCount++
+                        totalCount += 1
                         self.config.userDefault.setInteger(totalCount, forKey: "finishTaskCount")
                         self.updateStatus()
                         self.sendToServer()
