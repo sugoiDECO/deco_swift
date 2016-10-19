@@ -15,17 +15,36 @@ $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/inst
 
 ### Homebrewからrbenvをインストール
 
+ターミナルを起動し、以下のコマンドを入力します。
+
 ```bash
 $ brew install rbenv
 $ brew install ruby-build
 ```
+ruby-buildのインストールの際に
+
+```
+this causes certain builds to fail on OS X El Capitan (10.11).
+Please install the CLT via:
+ sudo xcode-select --install
+```
+
+のような記述が出た際は
+
+```
+$ sudo xcode-select --install
+```
+を入力してください。
+すると、
+![xcode-install](./images/xcode-install.png)
+が出るので、インストールを押してください。
 
 ### rbenvのPATHを通します
 
 ```bash
 $ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 $ echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.bash_profile
-$ source ~/.bash_profile 
+$ source ~/.bash_profile
 ```
 
 ### PATHが通っているかを確認
@@ -56,7 +75,7 @@ $ rbenv install -l
 ###rubyを適用
 
 ```bash
-$ rbenv global 2.3.0 
+$ rbenv global 2.3.0
 先ほどダウンロードしたバージョンにしてください
 $ ruby -v
 2.3.0
@@ -69,8 +88,9 @@ $ ruby -v
 
 ```bash
 $ sudo gem update
+Overwrite the executable?
+と聞かれたら全てyと入力し、enterを押す。
 $ sudo gem install cocoapods
-$ pod setup
 ```
 
 ###projectをクローンする
@@ -82,17 +102,32 @@ $ git clone https://github.com/sugoiDECO/deco_swift.git
 
 ###podで管理されているライブラリをインストールする
 
-	```bash
-	$ cd deco_swift
-	$ pod install
-	```
+```bash
+$ cd deco_swift
+$ pod install
+```
 
 ###Xcodeでプロジェクトを開く
 
 ![xcodeproject](./images/xcodeproject.png)
+
 `deco.xcodeproj`ではなく、`deco.xcworkspace`を開きます。
 
+![convert-swift](./images/swift-syntax.png)
+
+開いた後、このような表示が出た場合にはConvertを押していただき、その後の画面でもConvertを押してください。
+
+![identifier](./images/bundle-identifier.png)
+
+この欄のBundle Identifierを写真のように自分の名前など適当な値を入れて変えてください。
+
+![codesigning](./images/signing-error.png)
+
+こちらの欄でTeamを自分のAppleIDに設定します。
+初めて設定する際はAppleIDでログインする必要があるかもしれません。
+
 ###Build & Runする
+
 
 - 自身のiPhoneを接続します。
 
@@ -101,7 +136,7 @@ $ git clone https://github.com/sugoiDECO/deco_swift.git
 (こちらは初めてのデバイスだと結構時間がかかるかもしれません。)
 
 - Runを押す。
-読み込みが終わったら、Runボタンを押し、インストールします。
+読み込みが終わったら、三角形のRunボタンを押し、インストールします。
 ![run](./images/run.png)
 
 #JSONの設定方法
@@ -159,7 +194,7 @@ $ git clone https://github.com/sugoiDECO/deco_swift.git
 ```
 以上のような形がフォーマットとなります。
 順に説明していきます。
-- "52956:29906" 
+- "52956:29906"
 こちらはEstimoteBeaconのIDになります。この後に続く内容はこのビーコンの発火に紐付けられます。
 
 - "id"
@@ -220,8 +255,3 @@ Xcodeを開き、`deco/Model/`の中に`.json`ファイルを入れます。
 タスク詳細画面では実際にBeaconに近づいた際に現れるタスクの詳細、アクション、手段が見られます。実際にタスクを完了する際にはタスク完了のボタンをタップしてもらうとタスクが完了し、タスク一覧画面上でのそのタスクの文字が白くなり、完了の合図としてチェックマークがつきます。同時にサーバへは位置情報とともにタスク完了の通知が行くようになっています。
 
 ![5c3cfcf7-87a6-57f0-e278-89cdb320ee0b.png](https://qiita-image-store.s3.amazonaws.com/0/55608/e4dd60cc-78c3-1a75-d5db-22509b58ca88.png "5c3cfcf7-87a6-57f0-e278-89cdb320ee0b.png")
-
-
-
-
-
